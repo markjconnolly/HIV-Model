@@ -7,7 +7,7 @@ function dV = HIV_transmission_ODEs(t, V, p)
 	%%%%%%%%%%%%%%%%%%%
     % INFECTION RATES %
     %%%%%%%%%%%%%%%%%%%
-	p
+
 	% Within group
 	k_LU_LI		= p(1);		% Average proportional change per year
 	k_LU_LIH	= p(2);		% Decrease by factor of 100
