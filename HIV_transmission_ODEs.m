@@ -41,35 +41,52 @@ function dV = HIV_transmission_ODEs(t, V, p)
     
     % ODEs -- double check these
 	
-	LU			= V(1);
-	LI			= V(2);
-	LIH			= V(3);
-	HU			= V(4);
-	HI			= V(5);
-	HIH			= V(6);
-	
-	
-    dLU = LU*(alpha_LU + beta_LU) ...
-        - LU*(k_LU_LI + k_LU_LIH + k_LU_HI + k_LU_HIH) ...
-        - LU*(mu_LU);
+	LU		= V(1);
+	LI		= V(2);
+	LIH		= V(3);
+	HU		= V(4);
+	HI		= V(5);
+	HIH		= V(6);
+
+	dLU 	= beta_LU + alpha_LU*LU - mu_LU*LU ...
+			- k_LU_LI*LU*LI - k_LU_LIH*LU*LIH - k_LU_HI*LU*HI - k_LU_HIH*LU*HIH;
+				
+	dLI 	= k_LU_LI*LU*LI + k_LU_LIH*LU*LIH + k_LU_HI*LU*HI + k_LU_HIH*LU*HIH	...
+			- k_LI_LIH*LI - mu_LI*LI;
+				
+	dLIH	= k_LI_LIH*LI - mu_LIH*LIH;
    
-	dLI = LU*(k_LU_LI + k_LU_LIH + k_LU_HI + k_LU_HIH) + ...
-        - LI*(k_LI_LIH) ...
-        - LI*(mu_LI);
-    
-	dLIH = LI*(k_LI_LIH) ...
-         - LIH*(mu_LIH);
-    
-	dHU = HU*(alpha_HU) ...
-        - HU*(k_HU_LI + k_HU_LIH + k_HU_HI + k_HU_HIH) ...
-        - HU*(mu_HU);
-    
-	dHI = HU*(k_HU_LI + k_HU_LIH + k_HU_HI + k_HU_HIH) ...
-        - HI*(k_HI_HIH) ...
-        - HI*(mu_HI);
-    
-	dHIH = HI*(k_HI_HIH) ...
-         - HIH*(mu_HIH);
+	dHU		= alpha_HU*HU - mu_HU*HU ...
+			- k_HU_HI*HU*HI - k_HU_HIH*HU*HIH - k_HU_LI*HU*LI - k_HU_LIH*HU*LIH;
+	
+	dHI 	= k_HU_HI*HU*HI + k_HU_HIH*HU*HIH + k_HU_LI*HU*LI + k_HU_LIH*HU*LIH	...
+			- k_HI_HIH*HI - mu_HI*HI;
+			
+	dHIH	= k_HI_HIH*HI - mu_HIH*HIH;
+
+
+	
+%     dLU = LU*(alpha_LU + beta_LU) ...
+%         - LU*(k_LU_LI + k_LU_LIH + k_LU_HI + k_LU_HIH) ...
+%         - LU*(mu_LU);
+%    
+% 	dLI = LU*(k_LU_LI + k_LU_LIH + k_LU_HI + k_LU_HIH) + ...
+%         - LI*(k_LI_LIH) ...
+%         - LI*(mu_LI);
+%     
+% 	dLIH = LI*(k_LI_LIH) ...
+%          - LIH*(mu_LIH);
+%     
+% 	dHU = HU*(alpha_HU) ...
+%         - HU*(k_HU_LI + k_HU_LIH + k_HU_HI + k_HU_HIH) ...
+%         - HU*(mu_HU);
+%     
+% 	dHI = HU*(k_HU_LI + k_HU_LIH + k_HU_HI + k_HU_HIH) ...
+%         - HI*(k_HI_HIH) ...
+%         - HI*(mu_HI);
+%     
+% 	dHIH = HI*(k_HI_HIH) ...
+%          - HIH*(mu_HIH);
 	
 	dV(1) = dLU;
 	dV(2) = dLI;
